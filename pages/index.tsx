@@ -1,9 +1,9 @@
-import SplashScreen from '@/components/SplashScreen';
+import BroadcastMapView from '@/components/views/BroadcastMapView';
+import SplashScreen from '@/components/views/SplashScreen';
+import { useAuthorityStore } from '@/lib/stores/authorityStore';
 
 export default function HomePage() {
-  return (
-    <>
-      <SplashScreen />
-    </>
-  );
+  const loggedInAuthorityId = useAuthorityStore((state) => state.loggedInAuthorityId);
+
+  return <>{loggedInAuthorityId === null ? <SplashScreen /> : <BroadcastMapView />}</>;
 }

@@ -14,6 +14,7 @@ export default function LoginButton() {
       <LoginModal show={showLoginModal} setShow={setShowLoginModal} />
       <Button
         color={'dark'}
+        variant={loggedInAuthorityId === null ? undefined : 'outline'}
         onClick={() => {
           if (loggedInAuthorityId === null) {
             setShowLoginModal(true);

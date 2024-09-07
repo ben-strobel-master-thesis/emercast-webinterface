@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Center, Modal, PasswordInput, Space, Text, TextInput, Title } from '@mantine/core';
-import AsyncActionButton from '@/components/AsyncActionButton';
+import AsyncActionButton from '@/components/input/AsyncActionButton';
 import { useAuthorityStore } from '@/lib/stores/authorityStore';
 
 interface LoginModalProps {
@@ -48,7 +48,14 @@ export default function LoginModal({ show, setShow }: LoginModalProps) {
         color={'dark'}
         disabled={usernameInput.length === 0 || passwordInput.length === 0}
         action={async () => {
-          await login(usernameInput, passwordInput);
+          await login(usernameInput, passwordInput)
+            .then(() => {
+              setPasswordInput('');
+              setShow(false);
+            })
+            .catch(() => {
+              setPasswordInput('');
+            });
         }}
       >
         {'Log in'}
