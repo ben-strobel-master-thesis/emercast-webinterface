@@ -4,6 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 
+import dayjs from 'dayjs';
+import { useMemo } from 'react';
 import { LeafletMouseEvent } from 'leaflet';
 import { Stack, Text } from '@mantine/core';
 import { Area } from '@/components/views/BroadcastMapView/BroadcastMapView';
@@ -17,6 +19,10 @@ interface MapProps {
 
 export default function Map({ onClick, selectedArea }: MapProps) {
   const broadcasts = useBroadcastStore((state) => state.broadcastMessages);
+
+  const allMessages = useMemo(() => {
+    return Object.values(broadcasts).flat(1);
+  }, [broadcasts]);
 
   return (
     <MapContainer center={[48.1351, 11.582]} zoom={11} style={{ width: '100%', height: '100%' }}>
@@ -33,23 +39,17 @@ export default function Map({ onClick, selectedArea }: MapProps) {
           ></Circle>
         </Pane>
       )}
-      {Object.values(broadcasts)
-        .flat(1)
-        .map((x) => (
-          <Pane name={x.id}>
-            <Marker position={[x.latitude, x.longitude]}>
-              <Popup>
-                <Stack>
-                  <Text fw={700}>{x.title}</Text>
-                  <Text size={'sm'}>{`Created: ${new Date(x.created)}`}</Text>
-                  <Text size={'sm'}>{`Valid Until: ${new Date(x.forwardUntil)}`}</Text>
-                  <Text>{x.message}</Text>
-                </Stack>
-              </Popup>
-            </Marker>
-            <Circle center={[x.latitude, x.longitude]} radius={x.radius}></Circle>
-          </Pane>
-        ))}
+      {allMessages.map((x) => (
+        <Marker position={[x.latitude, x.longitude]}>
+          <Popup>
+            <Text fw={700}>{x.title}</Text>
+            <Text size={'xs'}>{`Created: ${dayjs.unix(x.created)}`}</Text>
+            <Text size={'xs'}>{`Valid Until: ${dayjs.unix(x.forwardUntil)}`}</Text>
+            <Text size={'sm'}>{x.message}</Text>
+          </Popup>
+          <Circle center={[x.latitude, x.longitude]} radius={x.radius}></Circle>
+        </Marker>
+      ))}
     </MapContainer>
   );
 }

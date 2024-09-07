@@ -126,6 +126,7 @@ export default function BroadcastCreatePanel({
             position.radiusMeter
           ).then((x) => {
             if (x) {
+              setSelectedArea(null);
               onClose();
             }
           });

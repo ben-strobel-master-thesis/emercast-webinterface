@@ -13,7 +13,7 @@ export default function BroadcastPanel({ createPanelProps }: BroadcastPanelProps
   const [mode, setMode] = useState<'list' | 'create'>('list');
 
   return (
-    <Stack style={{}}>
+    <Stack>
       <Group style={{ width: '100%' }} justify={'end'}>
         <Button
           color={'dark'}

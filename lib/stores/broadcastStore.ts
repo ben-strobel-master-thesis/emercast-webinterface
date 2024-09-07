@@ -16,10 +16,10 @@ interface broadcastStoreState {
     longitude: number,
     radius: number
   ) => Promise<boolean>;
-  fetchBroadcastMessages: (page: number, pageSize: number) => Promise<void>;
+  fetchBroadcastMessages: (page: number) => Promise<void>;
 }
 
-const pageSize = 10;
+export const pageSize = 10;
 
 export const useBroadcastStore = create<broadcastStoreState>((set, get) => {
   return {
@@ -51,7 +51,7 @@ export const useBroadcastStore = create<broadcastStoreState>((set, get) => {
         })
         .then(async (x) => {
           set({ broadcastMessages: {} });
-          await get().fetchBroadcastMessages(0, pageSize).catch(handleApiError);
+          await get().fetchBroadcastMessages(0).catch(handleApiError);
           return true;
         })
         .catch((err) => {
@@ -65,6 +65,7 @@ export const useBroadcastStore = create<broadcastStoreState>((set, get) => {
         .then((x) => {
           set((state) => {
             const newState = { ...state };
+            newState.broadcastMessages = { ...state.broadcastMessages };
             newState.broadcastMessages[page] = x;
             return newState;
           });
