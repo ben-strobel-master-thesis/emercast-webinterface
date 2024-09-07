@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@mantine/core": "7.12.2",
+    "@mantine/dates": "^7.12.2",
     "@mantine/hooks": "7.12.2",
     "@mantine/notifications": "^7.12.2",
     "@next/bundle-analyzer": "^14.2.4",
     "@tabler/icons-react": "^3.14.0",
+    "dayjs": "^1.11.13",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "next": "14.2.4",

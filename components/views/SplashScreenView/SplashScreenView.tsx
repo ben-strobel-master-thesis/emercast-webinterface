@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack, Text, Title } from '@mantine/core';
 import Logo from '@/components/common/Logo';
 
-export default function SplashScreen() {
+export default function SplashScreenView() {
   return (
     <Stack style={{ height: '90vh', width: '100%', marginTop: 100 }} align={'center'}>
       <Title style={{ fontSize: '50px' }}>Welcome to Emercast</Title>

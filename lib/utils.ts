@@ -2,6 +2,11 @@ import { NotificationData, notifications } from '@mantine/notifications';
 
 type NotificationOptions = Omit<NotificationData, 'message'>;
 
+export function roundToDecimals(value: number, decimals: number) {
+  let factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+}
+
 export function handleApiError(err: any) {
   if (!!err?.response) {
     let status: number | undefined = err.response.status;

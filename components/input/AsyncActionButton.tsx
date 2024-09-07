@@ -6,7 +6,7 @@ type AsyncActionButtonProps = ButtonProps & {
   action: () => Promise<any>;
   children?: any;
   blocking?: boolean;
-  loaderPos: 'left' | 'right';
+  loaderPos?: 'left' | 'right';
   loaderProps?: LoaderProps;
 };
 
@@ -38,7 +38,7 @@ export default function AsyncActionButton(props: AsyncActionButtonProps) {
         )
       }
       leftSection={
-        props.loaderPos === 'left' && showLoader ? (
+        (props.loaderPos === 'left' || props.loaderPos === undefined) && showLoader ? (
           <Loader {...props.loaderProps} />
         ) : (
           props.leftSection

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@mantine/core';
-import LoginModal from '@/components/LoginModal';
+import LoginModal from '@/components/common/LoginModal';
 import { useAuthorityStore } from '@/lib/stores/authorityStore';
 
 export default function LoginButton() {

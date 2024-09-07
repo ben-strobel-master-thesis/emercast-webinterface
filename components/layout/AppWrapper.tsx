@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { AppShell, Group, Text } from '@mantine/core';
+import LoginButton from '@/components/common/LoginButton';
 import Logo from '@/components/common/Logo';
-import LoginButton from '@/components/LoginButton';
 import { setApiToken } from '@/lib/stores/api';
 import { useAuthorityStore } from '@/lib/stores/authorityStore';
 
@@ -20,7 +20,7 @@ export default function AppWrapper({ children }: { children: any }) {
   }, []);
 
   return (
-    <AppShell header={{ height: 50 }}>
+    <AppShell header={{ height: 50 }} styles={{ root: { height: '100vh', position: 'relative' } }}>
       <AppShell.Header>
         <Group
           justify={'space-between'}
@@ -34,7 +34,7 @@ export default function AppWrapper({ children }: { children: any }) {
           <LoginButton />
         </Group>
       </AppShell.Header>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main style={{ height: '100%' }}>{children}</AppShell.Main>
     </AppShell>
   );
 }
