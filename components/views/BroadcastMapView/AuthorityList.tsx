@@ -65,7 +65,9 @@ export default function AuthorityList({
             <Group wrap={'nowrap'}>
               <Stack gap={'xs'} style={{ width: '78%' }}>
                 <Text fw={700}>{`Name: ${x.publicName}`}</Text>
+                <Text size={'xs'}>{`Id: ${x.id}`}</Text>
                 <Text size={'xs'}>{`Created: ${dayjs.unix(x.created)}`}</Text>
+                <Text size={'xs'}>{`Created by: ${x.createdBy}`}</Text>
               </Stack>
               <Stack style={{ width: '18%' }}>
                 <Tooltip label={x.id === selectedAuthority?.id ? 'Hide from map' : 'Show on map'}>
