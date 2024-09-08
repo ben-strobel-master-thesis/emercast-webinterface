@@ -20,7 +20,8 @@ export function handleApiError(err: any) {
     if (status === 404) {
       errorMessage = 'Not found';
     } else if (status === 401) {
-      errorMessage = 'You are not authorized to do that';
+      errorMessage =
+        'You are not authorized to do that. Log out and back in if you think you should be allowed to do this action';
     }
 
     showErrorNotification(errorMessage);

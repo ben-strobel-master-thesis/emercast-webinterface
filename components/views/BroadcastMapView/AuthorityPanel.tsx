@@ -2,8 +2,20 @@ import { useState } from 'react';
 import { Button, Group, Stack } from '@mantine/core';
 import AuthorityCreatePanel from '@/components/views/BroadcastMapView/AuthorityCreatePanel';
 import AuthorityList from '@/components/views/BroadcastMapView/AuthorityList';
+import { CreatePanelProps } from '@/components/views/BroadcastMapView/BroadcastCreatePanel';
+import { AuthorityDTO } from '@/lib/api';
 
-export default function AuthorityPanel() {
+interface AuthorityPanelProps {
+  selectedAuthority: AuthorityDTO | null;
+  setSelectedAuthority: (selectedAuthority: AuthorityDTO | null) => void;
+  createPanelProps: CreatePanelProps;
+}
+
+export default function AuthorityPanel({
+  selectedAuthority,
+  setSelectedAuthority,
+  createPanelProps,
+}: AuthorityPanelProps) {
   const [mode, setMode] = useState<'list' | 'create'>('list');
 
   return (
@@ -23,7 +35,20 @@ export default function AuthorityPanel() {
           {mode === 'list' ? 'Create Authority' : 'Cancel'}
         </Button>
       </Group>
-      {mode === 'list' ? <AuthorityList /> : <AuthorityCreatePanel />}
+      {mode === 'list' ? (
+        <AuthorityList
+          selectedAuthority={selectedAuthority}
+          setSelectedAuthority={setSelectedAuthority}
+        />
+      ) : (
+        <AuthorityCreatePanel
+          selectable={createPanelProps.selectable}
+          selectedArea={createPanelProps.selectedArea}
+          setSelectedArea={createPanelProps.setSelectedArea}
+          setSelectable={createPanelProps.setSelectable}
+          onClose={() => setMode('list')}
+        />
+      )}
     </Stack>
   );
 }

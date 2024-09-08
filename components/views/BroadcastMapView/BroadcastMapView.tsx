@@ -5,6 +5,7 @@ import { Group, Stack } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import OrientationDependentGroupStack from '@/components/layout/OrientationDependentGroupStack';
 import MapSidebar, { MapSidebarMode } from '@/components/views/BroadcastMapView/MapSidebar';
+import { AuthorityDTO } from '@/lib/api';
 import { useBroadcastStore } from '@/lib/stores/broadcastStore';
 import { roundToDecimals } from '@/lib/utils';
 
@@ -18,6 +19,8 @@ export default function BroadcastMapView() {
 
   const [selectedArea, setSelectedArea] = useState<Area | null>(null);
   const [selectable, setSelectable] = useState<boolean>(false);
+
+  const [selectedAuthority, setSelectedAuthority] = useState<AuthorityDTO | null>(null);
 
   const Map = useMemo(
     () =>
@@ -48,14 +51,15 @@ export default function BroadcastMapView() {
         <Map
           onClick={(e) => {
             if (selectable) {
-              setSelectedArea({
+              setSelectedArea((oldValue) => ({
                 latitude: roundToDecimals(e.latlng.lat, 4),
                 longitude: roundToDecimals(e.latlng.lng, 4),
-                radiusMeter: 500,
-              });
+                radiusMeter: oldValue === null ? 500 : oldValue.radiusMeter,
+              }));
             }
           }}
           selectedArea={selectedArea}
+          selectedAuthority={selectedAuthority}
         />
       </Stack>
       <Stack style={{ width: landscape ? '26%' : '100%', height: landscape ? '95%' : '40%' }}>
@@ -63,6 +67,8 @@ export default function BroadcastMapView() {
           mode={sidebarMode}
           setMode={setSidebarMode}
           createPanelProps={{ selectable, selectedArea, setSelectable, setSelectedArea }}
+          selectedAuthority={selectedAuthority}
+          setSelectedAuthority={setSelectedAuthority}
         />
       </Stack>
     </OrientationDependentGroupStack>

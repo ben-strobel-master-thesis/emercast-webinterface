@@ -10,14 +10,16 @@ import { LeafletMouseEvent } from 'leaflet';
 import { Stack, Text } from '@mantine/core';
 import { Area } from '@/components/views/BroadcastMapView/BroadcastMapView';
 import MapEventReceiver from '@/components/views/BroadcastMapView/MapEventReceiver';
+import { AuthorityDTO } from '@/lib/api';
 import { useBroadcastStore } from '@/lib/stores/broadcastStore';
 
 interface MapProps {
   onClick: (e: LeafletMouseEvent) => void;
   selectedArea: Area | null;
+  selectedAuthority: AuthorityDTO | null;
 }
 
-export default function Map({ onClick, selectedArea }: MapProps) {
+export default function Map({ onClick, selectedArea, selectedAuthority }: MapProps) {
   const broadcasts = useBroadcastStore((state) => state.broadcastMessages);
 
   const allMessages = useMemo(() => {
@@ -31,6 +33,14 @@ export default function Map({ onClick, selectedArea }: MapProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapEventReceiver onClick={onClick} />
+      {selectedAuthority &&
+        selectedAuthority.jurisdictionMarkers.map((x) => (
+          <Circle
+            center={[x.latitude, x.longitude]}
+            radius={x.radiusMeter}
+            pathOptions={{ color: 'white' }}
+          ></Circle>
+        ))}
       {selectedArea && (
         <Pane name={'SelectedArea'}>
           <Circle

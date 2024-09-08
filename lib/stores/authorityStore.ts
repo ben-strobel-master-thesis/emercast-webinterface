@@ -1,10 +1,12 @@
 import Cookies from 'universal-cookie';
 import { create } from 'zustand';
 import { Area } from '@/components/views/BroadcastMapView/BroadcastMapView';
+import { AuthorityDTO } from '@/lib/api';
 import { api, setApiToken } from '@/lib/stores/api';
 import { handleApiError } from '@/lib/utils';
 
 interface authorityStoreState {
+  authorities: { [page: number]: AuthorityDTO[] };
   loggedInAuthorityId: string | null;
   setLoggedInAuthorityId: (authorityId: string | null) => void;
   login: (username: string, password: string) => Promise<boolean>;
@@ -16,11 +18,15 @@ interface authorityStoreState {
     jurisdictionDescription: string,
     jurisdictionMarkers: Area[]
   ) => Promise<boolean>;
+  fetchAuthorityPage: (page: number) => Promise<void>;
 }
+
+export const pageSize = 10;
 
 export const useAuthorityStore = create<authorityStoreState>((set, get) => {
   return {
     loggedInAuthorityId: null,
+    authorities: {},
     login: async (username: string, password: string) => {
       return api
         .login({ loginRequest: { loginName: username, password } })
@@ -74,6 +80,19 @@ export const useAuthorityStore = create<authorityStoreState>((set, get) => {
           handleApiError(err);
           return false;
         });
+    },
+    fetchAuthorityPage: async (page: number) => {
+      await api
+        .getAuthorityPage({ page, pageSize })
+        .then((x) => {
+          set((state) => {
+            const newState = { ...state };
+            newState.authorities = { ...state.authorities };
+            newState.authorities[page] = x;
+            return newState;
+          });
+        })
+        .catch(handleApiError);
     },
   };
 });

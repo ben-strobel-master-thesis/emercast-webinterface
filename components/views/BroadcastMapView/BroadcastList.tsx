@@ -33,7 +33,7 @@ export default function BroadcastList() {
 
   return (
     <ScrollArea h={'75vh'}>
-      <Stack style={{ marginTop: '3rem' }}>
+      <Stack style={{ marginTop: '1rem' }}>
         {allMessages.length === 0 && (
           <Paper style={{ width: '100%' }} shadow="sm" p="xl" withBorder>
             <Stack align={'center'}>

@@ -32,9 +32,8 @@ export default function BroadcastCreatePanel({
   useEffect(() => {
     if (selectable) {
       setPosition((value) => {
-        if (value === null) return selectedArea;
         if (selectedArea == null) return null;
-        return { ...selectedArea, radiusMeter: value.radiusMeter };
+        return { ...selectedArea };
       });
     }
   }, [selectedArea]);
@@ -134,7 +133,7 @@ export default function BroadcastCreatePanel({
         blocking
         color={'dark'}
       >
-        Send New Broadcast
+        Send new broadcast
       </AsyncActionButton>
     </Stack>
   );
