@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import Cookies from 'universal-cookie';
 import { create } from 'zustand';
 import { Area } from '@/components/views/BroadcastMapView/BroadcastMapView';
@@ -35,8 +36,8 @@ export const useAuthorityStore = create<authorityStoreState>((set, get) => {
           set({ loggedInAuthorityId: x.authorityId });
 
           const cookies = new Cookies();
-          cookies.set('token', x.token, { maxAge: 60 * 60 * 24 });
-          cookies.set('authorityId', x.authorityId, { maxAge: 60 * 60 * 24 });
+          cookies.set('token', x.token, { maxAge: 60 * 60 * 24 * 365 * 1000 });
+          cookies.set('authorityId', x.authorityId, { maxAge: 60 * 60 * 24 * 365 * 1000 });
           return true;
         })
         .catch((err) => {
@@ -52,6 +53,9 @@ export const useAuthorityStore = create<authorityStoreState>((set, get) => {
     logout: async () => {
       setApiToken(null);
       set({ loggedInAuthorityId: null });
+      const cookies = new Cookies();
+      cookies.remove('token');
+      cookies.remove('authorityId');
     },
     createNewAuthority: async (
       loginName: string,
