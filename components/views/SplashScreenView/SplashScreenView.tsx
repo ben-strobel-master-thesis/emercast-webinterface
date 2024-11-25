@@ -8,6 +8,7 @@ export default function SplashScreenView() {
       <Title style={{ fontSize: '50px' }}>Welcome to Emercast</Title>
       <Logo style={{ width: '15rem', height: '15rem' }} />
       <Text>Please log in to proceed</Text>
+      <Text>Contact benedikt.strobel@tum.de to gain access to this system</Text>
     </Stack>
   );
 }
